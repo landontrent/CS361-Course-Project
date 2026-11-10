@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FitFinder{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="{{ url_for('browse') }}">FitFinder</a>
+    <nav aria-label="Main">
+      <a href="{{ url_for('browse') }}"{% if request.endpoint == 'browse' %} aria-current="page"{% endif %}>Browse Reviews</a>
+      <a class="button" href="{{ url_for('submit') }}">Write a Review</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">Page built in {{ load_ms() }} ms</footer>
+</body>
+</html>

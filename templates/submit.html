@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Write a Review - FitFinder{% endblock %}
+{% block content %}
+<section class="form-page">
+  <div class="form-head">
+    <h2>Write a review</h2>
+    <p class="benefit">Your review helps other shoppers choose with confidence.</p>
+  </div>
+
+  <p class="steps-caption">Four steps to finish:</p>
+  <ol class="steps">
+    <li>Item details</li>
+    <li>About you</li>
+    <li>Fit rating</li>
+    <li>Submit</li>
+  </ol>
+
+  <form method="post" action="{{ url_for('submit') }}" novalidate>
+    <div class="grid">
+      <div class="field">
+        <label for="brand">Brand (required)</label>
+        <input id="brand" name="brand" type="text" maxlength="60"
+               value="{{ form.get('brand', '') }}"
+               class="{{ 'invalid' if errors.brand }}"
+               {% if errors.brand %}aria-invalid="true" aria-describedby="brand-error"{% endif %}
+               placeholder="For example: Levi's">
+        {% if errors.brand %}<p class="error" id="brand-error" role="alert">{{ errors.brand }}</p>{% endif %}
+      </div>
+
+      <div class="field">
+        <div class="label-row">
+          <label for="height">Height in cm (required)</label>
+          <span class="hint">{{ min_height }} to {{ max_height }} cm</span>
+        </div>
+        <input id="height" name="height" type="text" inputmode="numeric"
+               value="{{ form.get('height', '') }}"
+               class="{{ 'invalid' if errors.height }}"
+               {% if errors.height %}aria-invalid="true" aria-describedby="height-error"{% endif %}
+               placeholder="For example: 168">
+        {% if errors.height %}<p class="error" id="height-error" role="alert">{{ errors.height }}</p>{% endif %}
+      </div>
+
+      <div class="field">
+        <label for="item">Item (required)</label>
+        <input id="item" name="item" type="text" maxlength="90"
+               value="{{ form.get('item', '') }}"
+               class="{{ 'invalid' if errors.item }}"
+               {% if errors.item %}aria-invalid="true" aria-describedby="item-error"{% endif %}
+               placeholder="For example: 501 Original Jeans">
+        {% if errors.item %}<p class="error" id="item-error" role="alert">{{ errors.item }}</p>{% endif %}
+      </div>
+
+      <div class="field">
+        <div class="label-row">
+          <label for="build">Build (required)</label>
+          <button type="button" class="link" id="guide-toggle" aria-expanded="false" aria-controls="build-guide">What do these mean?</button>
+        </div>
+        <select id="build" name="build"
+                class="{{ 'invalid' if errors.build }}"
+                {% if errors.build %}aria-invalid="true" aria-describedby="build-error"{% endif %}>
+          <option value="">Select your build</option>
+          {% for b in builds %}
+          <option value="{{ b }}"{% if form.get('build') == b %} selected{% endif %}>{{ b }}</option>
+          {% endfor %}
+        </select>
+        {% if errors.build %}<p class="error" id="build-error" role="alert">{{ errors.build }}</p>{% endif %}
+        <div id="build-guide" class="guide" hidden>
+          <p class="guide-title">Build guide</p>
+          <ul>
+            {% for name, desc in build_guide %}
+            <li><strong>{{ name }}:</strong> {{ desc }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="size">Size worn (required)</label>
+        <input id="size" name="size" type="text" maxlength="25"
+               value="{{ form.get('size', '') }}"
+               class="{{ 'invalid' if errors.size }}"
+               {% if errors.size %}aria-invalid="true" aria-describedby="size-error"{% endif %}
+               placeholder="For example: M or 30">
+        {% if errors.size %}<p class="error" id="size-error" role="alert">{{ errors.size }}</p>{% endif %}
+      </div>
+
+      <fieldset class="field fit">
+        <legend>Fit rating (required)</legend>
+        <div class="radios">
+          {% for f in fit_ratings %}
+          <label class="radio"><input type="radio" name="fit" value="{{ f }}"{% if form.get('fit') == f %} checked{% endif %}> {{ f }}</label>
+          {% endfor %}
+        </div>
+        {% if errors.fit %}<p class="error" role="alert">{{ errors.fit }}</p>{% endif %}
+      </fieldset>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="button primary">Submit Review</button>
+      <a class="button" href="{{ url_for('submit') }}">Clear Form</a>
+      <a class="button" href="{{ url_for('browse') }}">Cancel</a>
+      <span class="note">Clear or cancel anytime.</span>
+    </div>
+    <p class="cost-note">Takes about 2 minutes and is free. Your height and build will be shown publicly, but we never ask for your name or email.</p>
+  </form>
+</section>
+
+<script>
+  (function () {
+    var btn = document.getElementById('guide-toggle');
+    var panel = document.getElementById('build-guide');
+    if (!btn || !panel) { return; }
+    btn.addEventListener('click', function () {
+      var opening = panel.hasAttribute('hidden');
+      if (opening) { panel.removeAttribute('hidden'); } else { panel.setAttribute('hidden', ''); }
+      btn.setAttribute('aria-expanded', opening ? 'true' : 'false');
+      btn.textContent = opening ? 'Hide guide' : 'What do these mean?';
+    });
+  })();
+</script>
+{% endblock %}

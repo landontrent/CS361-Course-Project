@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Review submitted - FitFinder{% endblock %}
+{% block content %}
+<section class="panel confirm">
+  <h2>Review submitted</h2>
+  <p>Thank you! Your review is now visible to other shoppers, shown as Anonymous.</p>
+  <a class="button primary" href="{{ url_for('browse') }}">Back to reviews</a>
+</section>
+{% endblock %}

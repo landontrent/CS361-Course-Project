@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Browse Reviews - FitFinder{% endblock %}
+{% block content %}
+<div class="banner">See how clothes fit people with bodies like yours, then shop with confidence.</div>
+
+<div class="layout">
+  <aside class="filter" aria-label="Filter reviews">
+    <h2>Filter reviews</h2>
+    <div class="how-to">
+      <p class="how-to-title">How to filter:</p>
+      <ol>
+        <li>Enter a height range</li>
+        <li>Choose a build</li>
+        <li>Click Apply Filter</li>
+      </ol>
+    </div>
+
+    <form method="get" action="{{ url_for('browse') }}" novalidate>
+      <fieldset>
+        <legend>Height range (cm)</legend>
+        <div class="range">
+          <label class="sr-only" for="min">Minimum height in cm</label>
+          <input id="min" name="min" type="text" inputmode="numeric" placeholder="Min" value="{{ min_raw }}">
+          <label class="sr-only" for="max">Maximum height in cm</label>
+          <input id="max" name="max" type="text" inputmode="numeric" placeholder="Max" value="{{ max_raw }}">
+        </div>
+        {% if filter_error %}<p class="error" role="alert">{{ filter_error }}</p>{% endif %}
+      </fieldset>
+
+      <label for="build">Build</label>
+      <select id="build" name="build">
+        <option value="">Any build</option>
+        {% for b in builds %}
+        <option value="{{ b }}"{% if b == build %} selected{% endif %}>{{ b }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit" class="button primary full">Apply Filter</button>
+      <a class="button full" href="{{ url_for('browse') }}">Clear Filter</a>
+      <p class="note">You can clear filters anytime.</p>
+    </form>
+  </aside>
+
+  <section class="results" aria-live="polite">
+    {% if total == 0 %}
+      <div class="panel">
+        <h2>No reviews yet</h2>
+        <p>Be the first to share how something fits you.</p>
+        <a class="button primary" href="{{ url_for('submit') }}">Write a Review</a>
+      </div>
+    {% else %}
+      <p class="count">
+        {% if filter_active %}Showing {{ shown }} of {{ total }} review{{ '' if total == 1 else 's' }} ({{ criteria }}){% else %}Showing all {{ total }} review{{ '' if total == 1 else 's' }}{% endif %}
+      </p>
+      {% if shown == 0 %}
+        <div class="panel">
+          <h2>No reviews match your filter</h2>
+          <p>Not finding a match? Try one of these:</p>
+          <ol>
+            <li>Widen your height range.</li>
+            <li>Clear the filter to browse all reviews.</li>
+          </ol>
+          <a class="button primary" href="{{ url_for('browse') }}">Clear Filter and browse all reviews</a>
+        </div>
+      {% else %}
+        <div class="cards">
+          {% for r in reviews %}
+          <article class="card">
+            <h3>{{ r.brand }} {{ r.item }}</h3>
+            <p>Size {{ r.size }}, {{ r.height }} cm, {{ r.build }}</p>
+            <p>Fit: {{ r.fit }}</p>
+            <p>Posted by Anonymous</p>
+          </article>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
