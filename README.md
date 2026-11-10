@@ -50,7 +50,7 @@ Given the Browse page shows reviews of different heights and builds, when I ente
 | 7 Different approaches | No-match view: widen the height range, or click "Clear Filter and browse all reviews" |
 | 8 Tinker mindfully | "(required)" labels, "100 to 250 cm" height hint, inline red error messages that say what to fix |
 
-## Quality attributes and non-functional criteria
+## Quality attributes
 
 - **Usability:** Each Inclusivity Heuristic is reflected, and every form field has a visible text label.
 - **Confidentiality:** The form never asks for a name, email, or address, and every review is shown as "Posted by Anonymous."
