@@ -56,23 +56,4 @@ Given the Browse page shows reviews of different heights and builds, when I ente
 - **Confidentiality:** The form never asks for a name, email, or address, and every review is shown as "Posted by Anonymous."
 - **Responsiveness:** With 100 saved reviews, the Browse page loads within 2 seconds. Run `python seed.py --bulk 100`, then open Browse. The footer shows the server build time, and the browser's developer tools (F12, Network tab) show the full load time.
 
-## Demo script for the video (about 4 minutes)
 
-Run `python seed.py` first so Browse has 6 reviews. Keep this script open while recording.
-
-1. **Story 1, Submit Fit Review.** Read the story and its Given/When/Then. Click Write a Review, fill in Levi's / 501 Original Jeans / 30 / 168 / Athletic / Runs small, click Submit Review, and show "Review submitted." Click Back to reviews and show the new review at the top.
-2. **Story 2, Browse Fit Reviews.** Read the story and criterion. Point at the cards: brand, item, size, height, build, fit rating.
-3. **Story 3, Filter by Similar Build.** Read the story and criterion. Enter 160 to 170, choose Athletic, click Apply Filter, and show only the matching reviews. Click Clear Filter.
-4. **IH 1 to 8.** Point at each element in the table above while you say what it does. Do IH7 by filtering 190 to 200 and Petite. Do IH8 by submitting the form with the brand empty and the height 30.
-5. **Quality attributes.** State each attribute and its criterion, then show it:
-   - Usability: say the IH demo covered it, and point out the labels on every field.
-   - Confidentiality: show the form has no name, email, or address field, and the reviews say Anonymous.
-   - Responsiveness: run `python seed.py --bulk 100`, reload Browse, and show the load time.
-6. **GitHub release.** Open the repository's Releases page and show the release (for example v1.0.0).
-
-## Create the GitHub release
-
-1. Commit and push all the code. Check that `data/reviews.json` is not in the repo (it is in `.gitignore`).
-2. On GitHub, open the repo, click **Releases** on the right, then **Create a new release**.
-3. Click **Choose a tag**, type `v1.0.0`, and choose **Create new tag**.
-4. Title it `Milestone #1`, then click **Publish release**.
